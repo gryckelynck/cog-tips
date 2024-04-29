@@ -23,7 +23,7 @@ gdalbuildvrt my_dsm.vrt -addalpha -a_srs EPSG:2154 /dsm_directory/*.asc
 **Windows**
 
 ```batch
-gdalbuildvrt.exe C:\dsm\my_dsm.vrt C:\dsm_directory\*.asc -addalpha -a_srs EPSG:2154
+./gdalbuildvrt.exe C:\dsm\my_dsm.vrt C:\dsm_directory\*.asc -addalpha -a_srs EPSG:2154
 ```
 
 2. Convertir en COG
@@ -37,7 +37,7 @@ gdal_translate input_dsm.vrt my_dsm_output_cog.tif -of COG -co RESAMPLING=NEARES
 **Windows**
 
 ```batch
-ggdal_translate.exe C:\dsm\input_dsm.vrt C:\dsm\my_dsm_output_cog.tif -of COG -co BLOCKSIZE=512 -co OVERVIEW_RESAMPLING=NEAREST -co COMPRESS=DEFLATE -co PREDICTOR=2 -co NUM_THREADS=20 -co BIGTIFF=IF_NEEDED
+./gdal_translate.exe C:\dsm\input_dsm.vrt C:\dsm\my_dsm_output_cog.tif -of COG -co BLOCKSIZE=512 -co OVERVIEW_RESAMPLING=NEAREST -co COMPRESS=DEFLATE -co PREDICTOR=2 -co NUM_THREADS=20 -co BIGTIFF=IF_NEEDED
 ```
 
 **RESAMPLING** = méthode de rééchantillonnage qui peut être ajustée en fonction de vos usages.
@@ -74,7 +74,7 @@ gdalbuildvrt my_orthophotography.vrt 0_TIF/*.tif -addalpha -hidenodata -a_srs EP
 **Windows**
 
 ```batch
-gdalbuildvrt.exe C:\ortho\my_orthophotography.vrt C:\ortho\0_TIF\*.tif -addalpha -hidenodata -a_srs EPSG:2154
+./gdalbuildvrt.exe C:\ortho\my_orthophotography.vrt C:\ortho\0_TIF\*.tif -addalpha -hidenodata -a_srs EPSG:2154
 ```
 
 Combiner les options **-addalpha -hidenodata** pour définir le nodata comme transparent (évite les bordures noires ou blanches autour de la mosaïque)
@@ -90,12 +90,12 @@ gdal_translate my_orthophotography.vrt my_orthophotography_output_cog.tif -of CO
 **Windows**
 
 ```batch
-gdal_translate.exe C:\ortho\my_orthophotography.vrt C:\ortho\my_orthophotography_output_cog.tif -of COG -co BLOCKSIZE=512 -co OVERVIEW_RESAMPLING=BILINEAR -co COMPRESS=JPEG -co QUALITY=85 -co NUM_THREADS=12 -co BIGTIFF=YES
+./gdal_translate.exe C:\ortho\my_orthophotography.vrt C:\ortho\my_orthophotography_output_cog.tif -of COG -co BLOCKSIZE=512 -co OVERVIEW_RESAMPLING=BILINEAR -co COMPRESS=JPEG -co QUALITY=85 -co NUM_THREADS=12 -co BIGTIFF=YES
 ```
 
 ## Cas particuliers
 
-Merci :pray: à @bchartier pour ces contributions ainsi que les commandes sous Windows.
+Merci :pray: à @bchartier pour ses contributions ainsi que les commandes sous Windows.
 
 ### Découper une image selon un contour (avant conversion en COG)
 
@@ -110,7 +110,7 @@ gdalwarp -of GTiff -co TILED=YES -co BIGTIFF=YES -co BLOCKXSIZE=512 -co BLOCKYSI
 **Windows**
 
 ```batch
-gdalwarp.exe -of GTiff -co TILED=YES -co BIGTIFF=YES -co BLOCKXSIZE=512 -co BLOCKYSIZE=512 -co NUM_THREADS=12 -co COMPRESS=ZSTD -co PREDICTOR=2 -s_srs EPSG:2154 -t_srs EPSG:2154 -dstalpha -cutline C:\data\area_of_interest.shp C:\ortho\input_image.jp2 C:\ortho\image_output.tif
+./gdalwarp.exe -of GTiff -co TILED=YES -co BIGTIFF=YES -co BLOCKXSIZE=512 -co BLOCKYSIZE=512 -co NUM_THREADS=12 -co COMPRESS=ZSTD -co PREDICTOR=2 -s_srs EPSG:2154 -t_srs EPSG:2154 -dstalpha -cutline C:\data\area_of_interest.shp C:\ortho\input_image.jp2 C:\ortho\image_output.tif
 ```
 
 ### Convertir une image JP2 en TIFF encodé en RVBA (avant conversion en COG)
@@ -124,7 +124,7 @@ gdal_translate -of GTiff -co BIGTIFF=YES -co TILED=YES -co BLOCKXSIZE=512 -co BL
 **Windows**
 
 ```batch
-gdal_translate.exe -of GTiff -co BIGTIFF=YES -co TILED=YES -co BLOCKXSIZE=512 -co BLOCKYSIZE=512 -co NUM_THREADS=12 -co COMPRESS=ZSTD -co PREDICTOR=2 -b 1 -b 2 -b 3 -b mask -colorinterp red,green,blue,alpha -a_srs EPSG:2154 C:\ortho\input_image.jp2 C:\ortho\output_image.jp2
+./gdal_translate.exe -of GTiff -co BIGTIFF=YES -co TILED=YES -co BLOCKXSIZE=512 -co BLOCKYSIZE=512 -co NUM_THREADS=12 -co COMPRESS=ZSTD -co PREDICTOR=2 -b 1 -b 2 -b 3 -b mask -colorinterp red,green,blue,alpha -a_srs EPSG:2154 C:\ortho\input_image.jp2 C:\ortho\output_image.jp2
 ```
 
 ## Bonnes pratiques
